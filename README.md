@@ -1,6 +1,6 @@
 # Pocket
 
-Ruby wrapper for the [Pocket](getpocket.com) API
+Ruby wrapper for the [Pocket](https://getpocket.com) API
 
 ## Installation
 
