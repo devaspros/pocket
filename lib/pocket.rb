@@ -1,5 +1,7 @@
 require "dotenv/load"
+require "amazing_print"
 require "http"
+
 require "pocket/version"
 
 module Pocket
