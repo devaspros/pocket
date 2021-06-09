@@ -19,9 +19,35 @@ module Pocket
       r = @client.retrieve(endpoint: RETRIEVE_ENDPOINT, params: REQUEST_PARAMS)
 
       if r.status.success?
-        JSON.parse(r.body.to_s)
+        extract_from(JSON.parse(r.body.to_s))
       else
         puts r.body.to_s
+      end
+    end
+
+    private
+
+    def extract_from(response)
+      response['list'].map do |id, element|
+        Article.new(element)
+      end
+    end
+
+    class Article
+      def initialize(article)
+        @article = article
+      end
+
+      def url
+        @article['resolved_url']
+      end
+
+      def title
+        @article['resolved_title']
+      end
+
+      def excerpt
+        @article['excerpt']
       end
     end
   end
