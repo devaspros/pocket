@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "dotenv/load"
-require "amazing_print"
 require "byebug"
 require "http"
 
@@ -21,7 +20,7 @@ module Pocket
       @options = { consumer_key: consumer_key, access_token: access_token }
     end
 
-    def retrieve(endpoint:, params:)
+    def call(endpoint:, params:)
       HTTP.headers(HEADERS)
           .post("#{BASE_URL}/#{endpoint}", json: params.merge(@options))
     end

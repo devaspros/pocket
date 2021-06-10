@@ -8,6 +8,8 @@ module Pocket
 
     REQUEST_PARAMS = { count: ARTICLE_COUNT, tag: ARTICLE_TAG }
 
+    MODIFY_ENDPOINT = "send"
+
     def initialize
       @client = Client.new(
         consumer_key: ENV['POCKET_CONSUMER_KEY'],
@@ -16,10 +18,20 @@ module Pocket
     end
 
     def articles
-      r = @client.retrieve(endpoint: RETRIEVE_ENDPOINT, params: REQUEST_PARAMS)
+      r = @client.call(endpoint: RETRIEVE_ENDPOINT, params: REQUEST_PARAMS)
 
       if r.status.success?
         extract_from(JSON.parse(r.body.to_s))
+      else
+        puts r.body.to_s
+      end
+    end
+
+    def batch_archive(ids)
+      r = @client.call(endpoint: MODIFY_ENDPOINT, params: { actions: build_actions(ids) })
+
+      if r.status.success?
+        puts 'Todo fine'
       else
         puts r.body.to_s
       end
@@ -33,9 +45,19 @@ module Pocket
       end
     end
 
+    def build_actions(ids)
+      ids.map do |id|
+        { "action": "archive", "item_id": id, "time": Time.now.to_i }
+      end
+    end
+
     class Article
       def initialize(article)
         @article = article
+      end
+
+      def id
+        @article['item_id']
       end
 
       def url
