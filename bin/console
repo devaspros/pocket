@@ -10,5 +10,7 @@ require "pocket"
 # require "pry"
 # Pry.start
 
+require "amazing_print"
+
 require "irb"
 IRB.start(__FILE__)

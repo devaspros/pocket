@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "dotenv"
   spec.add_development_dependency "byebug"
+  spec.add_development_dependency "amazing_print", "1.3.0"
 
   spec.add_dependency "http", "4.4.1"
-  spec.add_dependency "amazing_print", "1.3.0"
 end

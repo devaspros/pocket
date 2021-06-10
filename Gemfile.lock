@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     pocket (0.1.0)
-      amazing_print (= 1.3.0)
       http (= 4.4.1)
 
 GEM
@@ -53,6 +52,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amazing_print (= 1.3.0)
   byebug
   dotenv
   pocket!
