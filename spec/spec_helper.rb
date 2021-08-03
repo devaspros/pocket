@@ -1,4 +1,5 @@
 require "bundler/setup"
+
 require "pocket"
 
 RSpec.configure do |config|
