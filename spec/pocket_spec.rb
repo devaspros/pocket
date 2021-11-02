@@ -1,9 +1,16 @@
 # spec/pocket_spec.rb
 
 RSpec.describe Pocket::Client do
-  let(:client) { described_class.new(consumer_key: 'hola', access_token: 'mundo') }
+  describe 'constants' do
+    specify do
+      expect(described_class).to have_constant(:BASE_URL)
+      expect(described_class).to have_constant(:HEADERS)
+    end
+  end
 
   describe '#call' do
+    let(:client) { described_class.new(consumer_key: 'hola', access_token: 'mundo') }
+
     it 'does it' do
       r = client.call(
         endpoint: 'get',
