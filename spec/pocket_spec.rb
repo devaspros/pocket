@@ -9,15 +9,18 @@ RSpec.describe Pocket::Client do
   end
 
   describe '#call' do
-    let(:client) { described_class.new(consumer_key: 'hola', access_token: 'mundo') }
+    let(:client) { instance_double(Pocket::Client) }
 
-    it 'does it' do
-      r = client.call(
+    it 'makes a request to Pocket API' do
+      allow(Pocket::Client).to receive(:new).and_return(client)
+      allow(client).to receive(:call).and_return(true)
+
+      res = client.call(
         endpoint: 'get',
         params: { count: 1, tag: 'schedule' }
       )
 
-      expect(r).to be_truthy
+      expect(res).to be_truthy
     end
   end
 end
