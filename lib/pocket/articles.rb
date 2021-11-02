@@ -5,9 +5,7 @@ module Pocket
     RETRIEVE_ENDPOINT = "get"
     ARTICLE_COUNT = 10
     ARTICLE_TAG = "schedule"
-
     REQUEST_PARAMS = { count: ARTICLE_COUNT, tag: ARTICLE_TAG }
-
     MODIFY_ENDPOINT = "send"
 
     def initialize
