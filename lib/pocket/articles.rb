@@ -19,6 +19,8 @@ module Pocket
       r = @client.call(endpoint: RETRIEVE_ENDPOINT, params: REQUEST_PARAMS)
 
       if r.status.success?
+        return [] if r.body.to_s.empty?
+
         extract_from(JSON.parse(r.body.to_s))
       else
         puts r.body.to_s
