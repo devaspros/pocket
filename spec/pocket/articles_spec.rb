@@ -13,7 +13,6 @@ RSpec.describe Pocket::Articles do
 
   describe '#articles' do
     context 'with scheduled articles' do
-      let(:client) { instance_double(Pocket::Client) }
       let(:articles_client) { described_class.new }
 
       let(:successful_response) do
@@ -47,5 +46,20 @@ RSpec.describe Pocket::Articles do
   end
 
   describe '#batch_archive' do
+    let(:archive_client) { described_class.new }
+    let(:archivable_ids) do
+      ['3461292822', '2972707538']
+    end
+
+    context 'with articles to archive' do
+      it 'archives them' do
+        stub_request(:post, 'https://getpocket.com/v3/send')
+          .to_return(status: 200)
+
+        res = archive_client.batch_archive(archivable_ids)
+
+        expect(res).to eq('Todo fine')
+      end
+    end
   end
 end

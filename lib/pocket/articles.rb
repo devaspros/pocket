@@ -31,9 +31,9 @@ module Pocket
       r = @client.call(endpoint: MODIFY_ENDPOINT, params: { actions: build_actions(ids) })
 
       if r.status.success?
-        puts 'Todo fine'
+        'Todo fine'
       else
-        puts r.body.to_s
+        r.body.to_s
       end
     end
 
