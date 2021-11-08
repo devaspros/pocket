@@ -3,16 +3,16 @@
 module Pocket
   class Articles
     RETRIEVE_ENDPOINT = "get"
-    ARTICLE_COUNT = 10
-    ARTICLE_TAG = "schedule"
-    REQUEST_PARAMS = { count: ARTICLE_COUNT, tag: ARTICLE_TAG }
     MODIFY_ENDPOINT = "send"
+    REQUEST_PARAMS = {
+      count: 10,
+      tag: "schedule",
+      consumer_key: ENV['POCKET_CONSUMER_KEY'],
+      access_token: ENV['ACCESS_TOKEN']
+    }
 
     def initialize
-      @client = Client.new(
-        consumer_key: ENV['POCKET_CONSUMER_KEY'],
-        access_token: ENV['ACCESS_TOKEN']
-      )
+      @client = Client.new
     end
 
     def articles

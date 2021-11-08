@@ -4,8 +4,9 @@ require "dotenv/load"
 require "byebug"
 require "http"
 
-require "pocket/version"
-require "pocket/articles"
+require_relative "pocket/version"
+require_relative "pocket/articles"
+require_relative "pocket/oauth/connect"
 
 module Pocket
   class Error < StandardError; end
@@ -14,15 +15,9 @@ module Pocket
     BASE_URL = "https://getpocket.com/v3"
     HEADERS = { "Content-Type" => "application/json" }
 
-    def initialize(consumer_key:, access_token:)
-      @consumer_key = consumer_key
-      @access_token = access_token
-      @options = { consumer_key: consumer_key, access_token: access_token }
-    end
-
     def call(endpoint:, params:)
       HTTP.headers(HEADERS)
-          .post("#{BASE_URL}/#{endpoint}", json: params.merge(@options))
+          .post("#{BASE_URL}/#{endpoint}", json: params)
     end
   end
 end
