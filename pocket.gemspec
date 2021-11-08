@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "amazing_print", "1.3.0"
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "dotenv"
+  spec.add_development_dependency "sinatra", "2.1"
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "webmock", "3.14.0"
