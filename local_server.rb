@@ -19,14 +19,18 @@ end
 get "/oauth/connect" do
   puts "OAUTH CONNECT"
 
+  connect_client = Pocket::Oauth::Connect.new
+
   # get the `code` that's converted to a `pocket_token`
   # make call to /v3/oauth/request
-  code = Pocket::Oauth::Connect.new.connect
+  code = connect_client.connect
   puts code
 
   # and redirect to the pocket website with query parameters to authorize the code
   # https://getpocket.com/auth/authorize?request_token=YOUR_REQUEST_TOKEN&redirect_uri=YOUR_REDIRECT_URI
-  'dale'
+  auth_url = connect_client.authorize(code)
+
+  redirect(auth_url)
 end
 
 get "/oauth/callback" do

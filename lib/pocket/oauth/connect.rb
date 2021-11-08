@@ -8,6 +8,7 @@ module Pocket
       consumer_key: ENV['POCKET_CONSUMER_KEY'],
       redirect_uri: ENV['CALLBACK_URL']
     }
+    AUTHORIZE_URL = 'https://getpocket.com/auth/authorize'
 
     # Connect to Pocket /v3/oauth/request to obtain a response token or code.
     class Connect
@@ -26,7 +27,11 @@ module Pocket
         end
       end
 
-      def authorize; end
+      # Generates this auth URL
+      # https://getpocket.com/auth/authorize?request_token=YOUR_REQUEST_TOKEN&redirect_uri=YOUR_REDIRECT_URI
+      def authorize(code)
+        "#{AUTHORIZE_URL}?request_token=#{code}&redirect_uri=#{ENV['CALLBACK_URL']}"
+      end
     end
   end
 end
