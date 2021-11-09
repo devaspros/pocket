@@ -11,6 +11,10 @@ get "/" do
 
   if session[:access_token] || !ENV['ACCESS_TOKEN'].empty?
     puts Pocket::Articles.new.articles
+    "
+      <h2>Pocket Token</h2>
+      <p>#{session[:access_token]}</p>
+    "
   else
     '<a href="oauth/connect">Connect with Pocket</a>'
   end
@@ -24,6 +28,7 @@ get "/oauth/connect" do
   # get the `code` that's converted to a `pocket_token`
   # make call to /v3/oauth/request
   code = connect_client.connect
+  session[:code] = code
   puts code
 
   # and redirect to the pocket website with query parameters to authorize the code
@@ -38,4 +43,9 @@ get "/oauth/callback" do
 
   # convert the code to a pocket_token
   # make call to /v3/oauth/authorize
+  pocket_token = Pocket::Oauth::Connect.new.pocket_token(session[:code])
+  session[:access_token] = pocket_token
+  puts pocket_token
+
+  redirect "/"
 end
