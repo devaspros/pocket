@@ -21,6 +21,8 @@ module Pocket
         r = @client.call(endpoint: CONNECT_ENDPOINT, params: CONNECT_PARAMS)
 
         if r.status.success?
+          # We do it this way because the response is a application/x-www-form-urlencoded
+          # This way we parse it and convert it into an accesible hash.
           parsed = Hash[URI.decode_www_form(r.body.to_s)]
           parsed['code']
         else
