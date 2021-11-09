@@ -4,11 +4,7 @@ require_relative 'lib/pocket'
 
 enable :sessions
 
-CALLBACK_URL = "http://localhost:4567/oauth/callback"
-
 get "/" do
-  puts "session: #{session}"
-
   if session[:access_token] || !ENV['ACCESS_TOKEN'].empty?
     puts Pocket::Articles.new.articles
     "
