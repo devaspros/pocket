@@ -8,6 +8,8 @@ require_relative "pocket/version"
 require_relative "pocket/articles"
 require_relative "pocket/oauth/connect"
 
+Dotenv.load('.env', '.env.local', '.env.test')
+
 module Pocket
   class Error < StandardError; end
 

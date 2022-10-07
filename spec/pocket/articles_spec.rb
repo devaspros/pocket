@@ -4,7 +4,6 @@ RSpec.describe Pocket::Articles do
   describe 'constants' do
     specify do
       expect(described_class).to have_constant(:RETRIEVE_ENDPOINT)
-      expect(described_class).to have_constant(:REQUEST_PARAMS)
       expect(described_class).to have_constant(:MODIFY_ENDPOINT)
     end
   end
@@ -56,7 +55,7 @@ RSpec.describe Pocket::Articles do
 
         res = archive_client.batch_archive(archivable_ids)
 
-        expect(res).to eq('Todo fine')
+        expect(res).to be_truthy
       end
     end
   end
