@@ -4,19 +4,19 @@ module Pocket
   class Articles
     RETRIEVE_ENDPOINT = "get"
     MODIFY_ENDPOINT = "send"
-    REQUEST_PARAMS = {
-      count: 10,
-      tag: "schedule",
-      consumer_key: ENV['POCKET_CONSUMER_KEY'],
-      access_token: ENV['ACCESS_TOKEN']
-    }
 
-    def initialize
+    def initialize(args = {})
       @client = Client.new
+      @request_payload = {
+        access_token: args.fetch(:access_token, nil),
+        count: 10,
+        tag: "schedule",
+        consumer_key: ENV.fetch('POCKET_CONSUMER_KEY')
+      }
     end
 
     def articles
-      r = @client.call(endpoint: RETRIEVE_ENDPOINT, params: REQUEST_PARAMS)
+      r = @client.call(endpoint: RETRIEVE_ENDPOINT, params: @request_payload)
 
       if r.status.success?
         return [] if r.body.to_s.empty?
@@ -28,10 +28,13 @@ module Pocket
     end
 
     def batch_archive(ids)
-      r = @client.call(endpoint: MODIFY_ENDPOINT, params: { actions: build_actions(ids) })
+      actions = { actions: build_actions(ids) }
+
+      r = @client.call(endpoint: MODIFY_ENDPOINT, params: @request_payload.merge(actions))
 
       if r.status.success?
-        'Todo fine'
+        puts "Articles archived succesfully"
+        true
       else
         r.body.to_s
       end

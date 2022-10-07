@@ -5,8 +5,9 @@ require_relative 'lib/pocket'
 enable :sessions
 
 get "/" do
-  if session[:access_token] || !ENV['ACCESS_TOKEN'].empty?
-    puts Pocket::Articles.new.articles
+  if session[:access_token]
+    puts Pocket::Articles.new(access_token: session[:access_token]).articles
+
     "
       <h2>Pocket Token</h2>
       <p>#{session[:access_token]}</p>

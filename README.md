@@ -16,6 +16,15 @@ And then execute:
 $ bundle install
 ```
 
+## Setup ENV vars
+
+You need to setup these env vars:
+
+```shell
+POCKET_CONSUMER_KEY=your_key
+CALLBACK_URL="your_url_callback"
+````
+
 ## Usage
 
 Run local server to try OAuth integration:
