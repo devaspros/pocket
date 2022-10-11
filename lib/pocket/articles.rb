@@ -6,6 +6,8 @@ module Pocket
     MODIFY_ENDPOINT = "send"
 
     def initialize(args = {})
+      check_env_vars
+
       @client = Client.new
       @request_payload = {
         access_token: args.fetch(:access_token, nil),
@@ -41,6 +43,11 @@ module Pocket
     end
 
     private
+
+    def check_env_vars
+      raise MissingPocketConsumerKeyError unless ENV.key?('POCKET_CONSUMER_KEY')
+      raise MissingCallbackUrlError unless ENV.key?('CALLBACK_URL')
+    end
 
     def extract_from(response)
       response['list'].map do |id, element|

@@ -8,6 +8,26 @@ RSpec.describe Pocket::Articles do
     end
   end
 
+  describe '#initialize' do
+    context 'without POCKET_CONSUMER_KEY env var' do
+      it 'raises exception' do
+        ENV.to_hash.delete('POCKET_CONSUMER_KEY')
+        stub_const('ENV', { 'CALLBACK_URL' => 'MYURL' })
+
+        expect { described_class.new }.to raise_error(Pocket::MissingPocketConsumerKeyError)
+      end
+    end
+
+    context 'without CALLBACK_URL env var' do
+      it 'raises exception' do
+        ENV.to_hash.delete('CALLBACK_URL')
+        stub_const('ENV', { 'POCKET_CONSUMER_KEY' => 'MYKEY' })
+
+        expect { described_class.new }.to raise_error(Pocket::MissingCallbackUrlError)
+      end
+    end
+  end
+
   describe '#articles' do
     context 'with scheduled articles' do
       let(:articles_client) { described_class.new }
