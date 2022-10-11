@@ -14,6 +14,8 @@ module Pocket
     # Connect to Pocket /v3/oauth/request to obtain a response token or code.
     class Connect
       def initialize
+        check_env_vars
+
         @client = Client.new
       end
 
@@ -50,6 +52,11 @@ module Pocket
       end
 
       private
+
+      def check_env_vars
+        raise MissingPocketConsumerKeyError unless ENV.key?('POCKET_CONSUMER_KEY')
+        raise MissingCallbackUrlError unless ENV.key?('CALLBACK_URL')
+      end
 
       def authorize_params(code)
         CONNECT_PARAMS.merge(code: code)
